@@ -1,0 +1,15 @@
+---
+#configuring hosts
+- name: "creating servers.cfg"
+  template: src=servers.cfg dest=/etc/nagios/objects/servers.cfg mode=664
+  notify: restart nagios
+
+# Additional Commands
+- name: "create additional_commands.cfg"
+  template: src=commands.cfg dest=/etc/nagios/objects/additional_commands.cfg mode=664
+  notify: restart nagios
+
+- name: load additional_commands.cfg
+  lineinfile: dest=/etc/nagios/nagios.cfg line="cfg_file=/etc/nagios/objects/additional_commands.cfg" regexp="cfg_file\=/etc/nagios/objects/additional_commands\.cfg"
+  notify: restart nagios
+
